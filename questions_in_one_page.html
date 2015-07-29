@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    </head>
+    <body>
+        <form id="myform" action="questions_in_one_page.html" method="get">
+            <input id="q1" type="hidden" name="q1" value="">
+            <input id="q2" type="hidden" name="q2" value="">
+            <input id="q3" type="hidden" name="q3" value="">
+        </form>
+        <div id="main">
+            <ul>
+                <li id="page1">
+                    <div>Q1. Region...</div>
+                    <div class="options_box">
+                        <ul>
+                            <li class="option" data-val="Europe">Europe</li>
+                            <li class="option" data-val="Asia">Asia</li>
+                        </ul>
+                    </div>
+                </li>
+                <li id="page2">
+                    <div>Q2. Country...</div>
+                    <div class="options_box">
+                        <ul>
+                            <li class="option" data-q1="Europe" data-val="UK">U.K.</li>
+                            <li class="option" data-q1="Europe" data-val="France">France</li>
+                            <li class="option" data-q1="Europe" data-val="Germany">Germany</li>
+                            <li class="option" data-q1="Asia" data-val="Japan">Japan</li>
+                            <li class="option" data-q1="Asia" data-val="China">China</li>
+                            <li class="option" data-q1="Asia" data-val="South_Korea">South Korea</li>
+                        </ul>
+                    </div>
+                </li>
+                <li id="page3">
+                    <div>Q3. City...</div>
+                    <div class="options_box">
+                        <ul >
+                            <li class="option" data-q2="UK" data-val="London">London<li>
+                            <li class="option" data-q2="UK" data-val="Manchster">Manchster<li>
+                            <li class="option" data-q2="France" data-val="Paris">Paris<li>
+                            <li class="option" data-q2="France" data-val="Lyon">Lyon<li>
+                            <li class="option" data-q2="France" data-val="Nice">Nice<li>
+                            <li class="option" data-q2="Germany" data-val="Berlin">Berlin<li>
+                            <li class="option" data-q2="Germany" data-val="Frankfurt">Frankfurt<li>
+                            <li class="option" data-q2="Japan" data-val="Tokyo">Tokyo<li>
+                            <li class="option" data-q2="Japan" data-val="Osaka">Osaka<li>
+                            <li class="option" data-q2="Japan" data-val="Fukuoka">Fukuoka<li>
+                            <li class="option" data-q2="China" data-val="Beijing">Beijing<li>
+                            <li class="option" data-q2="China" data-val="Shanghai">Shanghai<li>
+                            <li class="option" data-q2="South_Korea" data-val="Seoul">Seoul<li>
+                            <li class="option" data-q2="South_Korea" data-val="Busan">Busan<li>
+                        </ul>
+                        <center>
+                            <div id="btn_submit" >Submit</a>
+                        </center>
+                    </div>
+                </li>
+            <ul>
+        </div>
+    </body>
+</html>
+<script type="text/javascript">
+    $(function(){
+
+        // Event Handler for Q.1
+        $("#page1 li").click(function () {
+            var v = $(this).data('val');
+            $("#page2 li:not([data-q1=" + v + "])").hide();
+            $("#q1").val(v);
+            feedPage(1);
+        });
+
+        // Event Handler for Q.2
+        $("#page2 li").click(function () {
+            var v = $(this).data('val');
+            $("#page3 li:not([data-q2=" + v + "])").hide();
+            $("#q2").val(v);
+            feedPage(2);
+        });
+
+        // Event Handler for Q.3
+        $("#page3 li").click(function () {
+            var v = $(this).data('val');
+            $("#q3").val(v);
+        });
+
+        // Function for Page Feeding 
+        function feedPage(n) {
+            $("#page" + n).fadeOut(function () {
+                $("#page" + (n + 1)).fadeIn();
+            });
+        }
+        $(".option").click(function () {
+            $(this).addClass('selected');
+        });
+        // Function for Submitting the form
+        $("#btn_submit").click(function () {
+            var v1 = $("#q1").val();
+            var v2 = $("#q2").val();
+            var v3 = $("#q3").val();
+            alert("You selected : " + v1 + ", " + v2 + ", and " + v3);
+            $("#myform").submit();
+        });
+    })
+</script>
+<style type="text/css">
+    body{
+        margin: 0;
+        background-color:#efefef;
+    }
+    #main{
+        width: 600px;
+        background-color: white;
+        position: absolute;
+        top:100px;
+        left: 0;
+        right: 0;
+        margin: auto;
+        text-align: center;
+        padding: 2em;
+    }
+    #main ul{
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+    #main > ul > li:not(:first-child) {
+        display: none;
+    }
+    #main ul li ul{
+        margin: 1em;
+    }
+    #main ul li ul li.option{
+        border: 2px #ccc solid;
+        padding: 1em;
+        margin: 0.7em;
+        background-color: #fff;
+        cursor: pointer;
+        font-weight: bold;
+        color: #555;
+    }
+    #main ul li ul li.option:hover {
+        background-color: #eee;
+    }
+    #main ul li ul li.selected{
+        background-color: #bbb;
+        color: #fff;
+    }
+    #main #btn_submit{
+        background-color: #666;
+        color: #fff;
+        padding: 1em;
+        width: 200px;
+        cursor: pointer;
+    }
+</style>
